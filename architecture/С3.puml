@@ -1,0 +1,22 @@
+@startuml
+== Мгновенные уведомления ==
+
+Client -> Api_service: Отправка мгновенного события
+activate Api_service
+Api_service -> RabbitMQ: Создание события
+activate RabbitMQ
+Worker -> RabbitMQ: Получение события
+activate Worker
+Worker -> SMTP_server: Отправка письма
+
+== Периодические уведомления ==
+
+Client -> Api_service: Отправка периодического уведомления
+Api_service -> PostgreSQL: Сохранение данных уведомления
+activate PostgreSQL
+Api_service -> RabbitMQ: Scheduler создает события раз в n времени
+Worker -> RabbitMQ: Получение события
+Worker -> SMTP_server: Отправка письма
+Worker -> PostgreSQL: Сохранение отправленного уведомления
+deactivate PostgreSQL
+@enduml

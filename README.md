@@ -1,1 +1,6 @@
-Ссылка на репо - https://github.com/Sisilius/notifications_sprint_2
+1. Запустить проект командой `docker compose up --build -d`
+2. Выполнитьл миграции запустив скрипт `make_migrations.sh` 
+
+----------------
+
+Для получения оповещений от к вебсокета необходимо подключиться по url ws://{server_name}:8765/{user_id}

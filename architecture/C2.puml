@@ -1,0 +1,18 @@
+@startuml
+skinparam componentStyle uml2
+actor Клиент as Client
+component API_service
+component RabbitMq
+component SMTP_server
+database Postgres
+database Redis
+component Worker
+
+Client -right-> API_service: Отправка уведомления, события
+API_service -> RabbitMq: Создание события в очередь
+Worker -left-> RabbitMq: Чтение событий из очереди
+API_service -down-> Postgres: Сохранение переодического события
+Worker --> Postgres: Получение периодического события
+Worker -> SMTP_server: Отправка уведомления
+Worker -up-> Redis: Получение короткой ссылки
+@enduml
